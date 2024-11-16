@@ -8,9 +8,10 @@ function generateTimeOptions() {
 
 export const timeOptions = generateTimeOptions()
 
-export function formatTime(time: number) {
+export function formatTime(time: number, useAmpm = false) {
   let _hour = Math.floor(time / 100)
-  _hour = _hour > 12 ? _hour - 12 : _hour
+
+  if (useAmpm) _hour = _hour > 12 ? _hour - 12 : _hour
 
   const ampm = time < 1200 ? 'am' : 'pm'
   const hour = _hour.toString().padStart(2, '0')
@@ -19,5 +20,7 @@ export function formatTime(time: number) {
   if (time % 100 === 50) min = '30'
   if (time % 100 === 75) min = '45'
 
-  return `${hour}:${min} ${ampm}`
+  if (useAmpm) return `${hour}:${min} ${ampm}`
+
+  return `${hour}:${min}`
 }

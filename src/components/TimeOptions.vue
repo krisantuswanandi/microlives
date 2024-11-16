@@ -38,7 +38,7 @@ watch(localVal, (val) => {
     </SelectTrigger>
     <SelectContent>
       <SelectItem v-for="n in timeOptions" :key="n" :value="n.toString()">
-        {{ formatTime(n) }}
+        {{ formatTime(n, true) }}
       </SelectItem>
     </SelectContent>
   </Select>
