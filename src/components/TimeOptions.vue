@@ -13,7 +13,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'change', value: string): void
+  (e: 'changeSlots', value: string): void
 }>()
 
 const localVal = ref(props.value)
@@ -45,7 +45,7 @@ watch(
 )
 
 watch(localVal, (val) => {
-  emit('change', val)
+  emit('changeSlots', val)
 })
 </script>
 

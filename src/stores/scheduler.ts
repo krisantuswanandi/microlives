@@ -7,13 +7,13 @@ export const useSchedulerStore = defineStore('scheduler', () => {
     noOfBooking: 1,
     allowVideo: true,
     timeSlots: {
-      mon: [''],
-      tue: [''],
-      wed: [''],
-      thu: [''],
-      fri: [''],
-      sat: [''],
-      sun: [''],
+      mon: { enabled: false, slots: [''] },
+      tue: { enabled: false, slots: [''] },
+      wed: { enabled: false, slots: [''] },
+      thu: { enabled: false, slots: [''] },
+      fri: { enabled: false, slots: [''] },
+      sat: { enabled: false, slots: [''] },
+      sun: { enabled: false, slots: [''] },
     },
   })
 

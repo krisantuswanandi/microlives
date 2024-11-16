@@ -7,21 +7,28 @@ import { Trash2, Plus } from 'lucide-vue-next'
 import { useSchedulerStore } from '@/stores/scheduler'
 import { type Day } from '@/lib/days'
 
-const props = defineProps<{ day: Day; value: string[] }>()
+const props = defineProps<{ day: Day; enabled: boolean; slots: string[] }>()
 
 const emit = defineEmits<{
-  (e: 'change', value: string[]): void
+  (e: 'changeEnabled', value: boolean): void
+  (e: 'changeSlots', value: string[]): void
 }>()
 
-const timeSlots = ref(props.value)
 const schedulerStore = useSchedulerStore()
+
+const enabled = ref(props.enabled)
+const timeSlots = ref(props.slots)
 
 function addSlot(index: number) {
   timeSlots.value.splice(index + 1, 0, '')
 }
 
 function removeSlot(index: number) {
-  timeSlots.value.splice(index, 1)
+  if (timeSlots.value.length > 1) {
+    timeSlots.value.splice(index, 1)
+  } else {
+    timeSlots.value[0] = ''
+  }
 }
 
 function calculateEndTime(start: string) {
@@ -34,16 +41,20 @@ function calculateEndTime(start: string) {
 watch(
   timeSlots,
   (val) => {
-    emit('change', val)
+    emit('changeSlots', val)
   },
   { deep: true },
 )
+
+watch(enabled, (val) => {
+  emit('changeEnabled', val)
+})
 </script>
 
 <template>
   <div class="flex items-start py-4 border-b" :class="day === 'sun' ? 'border-none' : ''">
     <div class="flex items-center mt-1">
-      <Checkbox />
+      <Checkbox v-model:checked="enabled" />
       <div class="font-semibold min-w-20 capitalize ml-2">{{ day }}</div>
     </div>
     <div class="flex-1">

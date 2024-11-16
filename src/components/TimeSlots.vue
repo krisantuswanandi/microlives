@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { useSchedulerStore } from '@/stores/scheduler'
 import TimeSlotsItem from './TimeSlotsItem.vue'
-import { days, type Day } from '@/lib/days'
+import { days } from '@/lib/days'
 
 const schedulerStore = useSchedulerStore()
-function changeTimeSlot(day: Day, value: string[]) {
-  schedulerStore.scheduler.timeSlots[day] = value
-}
 </script>
 
 <template>
@@ -20,8 +17,10 @@ function changeTimeSlot(day: Day, value: string[]) {
         v-for="day in days"
         :key="day"
         :day="day"
-        :value="schedulerStore.scheduler.timeSlots[day]"
-        @change="changeTimeSlot(day, $event)"
+        :enabled="schedulerStore.scheduler.timeSlots[day].enabled"
+        :slots="schedulerStore.scheduler.timeSlots[day].slots"
+        @change-enabled="schedulerStore.scheduler.timeSlots[day].enabled = $event"
+        @change-slots="schedulerStore.scheduler.timeSlots[day].slots = $event"
       />
     </div>
   </div>
