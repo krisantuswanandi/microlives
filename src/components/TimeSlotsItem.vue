@@ -5,18 +5,15 @@ import { Button } from '@/components/ui/button'
 import TimeOptions from '@/components/TimeOptions.vue'
 import { Trash2, Plus } from 'lucide-vue-next'
 import { useSchedulerStore } from '@/stores/scheduler'
+import { type Day } from '@/lib/days'
 
-const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
-
-defineProps<{
-  day: (typeof days)[number]
-}>()
+const props = defineProps<{ day: Day; value: string[] }>()
 
 const emit = defineEmits<{
   (e: 'change', value: string[]): void
 }>()
 
-const timeSlots = ref([''])
+const timeSlots = ref(props.value)
 const schedulerStore = useSchedulerStore()
 
 function addSlot(index: number) {
@@ -29,7 +26,7 @@ function removeSlot(index: number) {
 
 function calculateEndTime(start: string) {
   const startTime = parseInt(start)
-  const duration = parseInt(schedulerStore.visitDuration)
+  const duration = parseInt(schedulerStore.scheduler.visitDuration)
   const endTime = startTime + duration
   return !isNaN(endTime) ? endTime.toString() : ''
 }
@@ -39,9 +36,7 @@ watch(
   (val) => {
     emit('change', val)
   },
-  {
-    deep: true,
-  },
+  { deep: true },
 )
 </script>
 

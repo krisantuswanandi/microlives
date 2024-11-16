@@ -17,14 +17,14 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import { useSchedulerStore } from '@/stores/scheduler'
 
-const scheduler = useSchedulerStore()
+const store = useSchedulerStore()
 </script>
 
 <template>
   <div class="max-w-60">
     <div>
       <Label for="visit-duration">Visit Duration</Label>
-      <Select id="visit-duration" v-model="scheduler.visitDuration">
+      <Select id="visit-duration" v-model="store.scheduler.visitDuration">
         <SelectTrigger>
           <SelectValue placeholder="Select" />
         </SelectTrigger>
@@ -39,7 +39,7 @@ const scheduler = useSchedulerStore()
     </div>
     <div class="mt-4">
       <Label for="no-of-booking">No. of Booking / Session</Label>
-      <NumberField id="no-of-booking" :min="1" :max="10" v-model="scheduler.noOfBooking">
+      <NumberField id="no-of-booking" :min="1" :max="10" v-model="store.scheduler.noOfBooking">
         <NumberFieldContent>
           <NumberFieldDecrement />
           <NumberFieldInput />
@@ -48,7 +48,7 @@ const scheduler = useSchedulerStore()
       </NumberField>
     </div>
     <div class="mt-4 flex items-center gap-1">
-      <Checkbox id="allow-video" v-model:checked="scheduler.allowVideo" />
+      <Checkbox id="allow-video" v-model:checked="store.scheduler.allowVideo" />
       <Label for="allow-video">Allow video tour call</Label>
     </div>
   </div>
